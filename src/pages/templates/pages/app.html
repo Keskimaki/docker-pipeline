@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Chat App</title>
+    </head>
+
+    <body>
+        <h1>Welcome {{ username }}</h1>
+        <a href="/">logout</a>
+
+        <h2>Received messages</h2>
+
+        {% for m in messages %}
+        {{ m }} <br>
+        {% endfor %}
+
+        <!--
+        <ul>
+        {% for m in messages %}
+        <li>{{ m }}</li>
+        {% endfor %}
+        </ul>
+        -->
+
+        <h2>Send a message</h2>
+        
+        <form action="/app" method="post">
+            <!-- {% csrf_token %} -->
+            <p>recipient</p>
+            <select name="receiver">
+                {% for u in users %}
+                <option>{{ u }}</optinon>
+                {% endfor %}
+            </select>
+
+            <p>message</p>
+            <textarea name="content" rows="5" cols="50">Write your message here</textarea>
+            <br>
+            <button type="submit">send</button>
+        </form>
+
+    </body>
+</html>
