@@ -1,14 +1,13 @@
-FROM python
+FROM python:alpine
 
 EXPOSE 8000
 
 WORKDIR /usr/src/app
 
-RUN pip install poetry
-
 COPY poetry.lock pyproject.toml ./
 
-RUN poetry install
+RUN apk add --no-cache --virtual .pynacl_deps build-base python3-dev libffi-dev && \
+    pip install poetry && poetry install
 
 COPY . .
 
