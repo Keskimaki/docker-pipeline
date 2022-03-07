@@ -1,3 +1,4 @@
+from django.dispatch import receiver
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from .models import User, Message
@@ -49,6 +50,12 @@ def app(request, context=None):
         return redirect('/')
 
 def db(request):
+    if not User.objects.all():
+        user = User(0, 'User', 'user')
+        user.save()
+        message = Message(id=0, content='This is a placeholder message.', receiver=user)
+        message.save()
+
     users = [ f'{user.username};{user.password}' for user in User.objects.all() ]
     messages = [ f'{message.content};{message.receiver.username}' for message in Message.objects.all() ]
 
